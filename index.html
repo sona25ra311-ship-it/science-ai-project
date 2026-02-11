@@ -3,49 +3,363 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Science AI</title>
+    <title>🧪 Science AI - Your Personal Science Assistant</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            padding: 20px;
-            max-width: 600px;
-            margin: auto;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 700px;
+            width: 100%;
+            padding: 40px;
+            animation: slideUp 0.5s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            color: #667eea;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+
+        .header .subtitle {
+            color: #999;
+            font-size: 0.95em;
+        }
+
+        .input-section {
+            margin-bottom: 25px;
+        }
+
+        .input-section label {
+            display: block;
+            margin-bottom: 10px;
+            color: #333;
+            font-weight: 600;
+            font-size: 1.05em;
+        }
+
         textarea {
             width: 100%;
-            height: 100px;
-            margin-bottom: 10px;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 1em;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            resize: vertical;
+            min-height: 120px;
+            transition: all 0.3s ease;
         }
+
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        textarea::placeholder {
+            color: #bbb;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
         button {
-            padding: 10px 15px;
-            background-color: #007bff;
-            color: white;
+            flex: 1;
+            padding: 15px 20px;
             border: none;
+            border-radius: 12px;
+            font-size: 1.05em;
+            font-weight: 600;
             cursor: pointer;
+            transition: all 0.3s ease;
         }
-        button:hover {
-            background-color: #0056b3;
+
+        .ask-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
         }
+
+        .ask-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .ask-btn:active {
+            transform: translateY(0);
+        }
+
+        .clear-btn {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .clear-btn:hover {
+            background: #e0e0e0;
+        }
+
+        .response-section {
+            margin-top: 30px;
+            padding: 25px;
+            background: #f8f9ff;
+            border-radius: 12px;
+            border-left: 4px solid #667eea;
+            display: none;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .response-section.show {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .response-title {
+            color: #667eea;
+            font-size: 1.2em;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
         #response {
-            margin-top: 20px;
-            padding: 10px;
-            background-color: #e9ecef;
+            color: #333;
+            line-height: 1.8;
+            font-size: 1em;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .loading.show {
+            display: block;
+        }
+
+        .spinner {
+            border: 4px solid #f0f0f0;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: #667eea;
+            margin-top: 10px;
+            font-weight: 600;
+        }
+
+        .category-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .category-btn {
+            padding: 10px 15px;
+            border: 2px solid #e0e0e0;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9em;
+            color: #666;
+            transition: all 0.3s ease;
+        }
+
+        .category-btn:hover {
+            border-color: #667eea;
+            color: #667eea;
+        }
+
+        .info-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            color: #856404;
+            font-size: 0.95em;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            button {
+                font-size: 1em;
+                padding: 12px 15px;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>Ask Science AI</h1>
-    <textarea id="question" placeholder="Type your question here..."></textarea>
-    <button id="ask-button">Ask AI</button>
-    <div id="response"></div>
 
-    <script>
-        document.getElementById('ask-button').onclick = function() {
-            const question = document.getElementById('question').value;
-            document.getElementById('response').innerHTML = `<p>You asked: ${question}</p><p>Response from AI will be here.</p>`;
-            // Here you would typically call the AI API to get the response
-        };
-    </script>
+<div class="container">
+    <div class="header">
+        <h1>🧪 Science AI</h1>
+        <p>Your Personal Science Assistant</p>
+        <p class="subtitle">Ask any science question and get instant answers!</p>
+    </div>
+
+    <div class="info-box">
+        💡 Tip: Ask questions about Physics, Chemistry, Biology, Astronomy, and more!
+    </div>
+
+    <div class="input-section">
+        <label for="question">What would you like to know?</label>
+        <textarea id="question" placeholder="E.g., How does photosynthesis work? What is gravity? How do vaccines work?"></textarea>
+    </div>
+
+    <div class="category-buttons">
+        <button class="category-btn" onclick="insertQuestion('🔬 Physics')">🔬 Physics</button>
+        <button class="category-btn" onclick="insertQuestion('⚗️ Chemistry')">⚗️ Chemistry</button>
+        <button class="category-btn" onclick="insertQuestion('🧬 Biology')">🧬 Biology</button>
+        <button class="category-btn" onclick="insertQuestion('🌌 Astronomy')">🌌 Astronomy</button>
+    </div>
+
+    <div class="button-group">
+        <button class="ask-btn" onclick="generate()">🚀 Ask AI</button>
+        <button class="clear-btn" onclick="clearAll()">🗑️ Clear</button>
+    </div>
+
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
+        <div class="loading-text">Thinking...</div>
+    </div>
+
+    <div class="response-section" id="responseSection">
+        <div class="response-title">✨ AI Response</div>
+        <div id="response"></div>
+    </div>
+</div>
+
+<script>
+    function insertQuestion(category) {
+        const textarea = document.getElementById('question');
+        if (textarea.value) {
+            textarea.value += ' (' + category + ')';
+        } else {
+            textarea.value = category + ': ';
+        }
+        textarea.focus();
+    }
+
+    function generate() {
+        const question = document.getElementById('question').value.trim();
+        
+        if (!question) {
+            alert('Please enter a question!');
+            return;
+        }
+
+        const loading = document.getElementById('loading');
+        const responseSection = document.getElementById('responseSection');
+        const responseDiv = document.getElementById('response');
+
+        loading.classList.add('show');
+        responseSection.classList.remove('show');
+
+        // Simulate API call delay
+        setTimeout(() => {
+            loading.classList.remove('show');
+            responseSection.classList.add('show');
+
+            const responses = [
+                "🤖 Great question! Science is all about curiosity and exploration.\n\n💡 Key Points:\n• Science builds on observation and experimentation\n• Every theory is supported by evidence\n• Scientists continue to refine our understanding\n\n🌟 Fun Fact: Did you know that space is completely silent because there is no air to carry sound?\n\n🔬 Keep exploring and asking questions!",
+                "🎓 Excellent inquiry! Let me break this down for you:\n\n📚 Understanding the Concept:\n• Start with the basics\n• Build on fundamental principles\n• Connect to real-world applications\n\n🧪 Scientific Method:\n1. Observation\n2. Hypothesis\n3. Experimentation\n4. Analysis\n5. Conclusion\n\n✨ Remember: Science is a journey of discovery!",
+                "🌍 Wonderful question about science!\n\n🔑 Key Takeaways:\n• Curiosity drives innovation\n• Evidence supports all scientific claims\n• Science evolves with new discoveries\n\n💫 Amazing Fact: The same atoms in your body have existed since the beginning of the universe!\n\n🚀 Keep asking, keep learning!"
+            ];
+
+            const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+            responseDiv.innerText = randomResponse;
+        }, 1500);
+    }
+
+    function clearAll() {
+        document.getElementById('question').value = '';
+        document.getElementById('responseSection').classList.remove('show');
+        document.getElementById('loading').classList.remove('show');
+        document.getElementById('question').focus();
+    }
+
+    // Allow Enter key with Ctrl/Cmd to submit
+    document.getElementById('question').addEventListener('keydown', function(e) {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+            generate();
+        }
+    });
+</script>
+
 </body>
 </html>
