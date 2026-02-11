@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Business Idea Generator AI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      background: #f4f4f9;
+      color: #333;
+    }
+    header {
+      background: #1e1e2f;
+      color: #fff;
+      padding: 1.5rem;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+    main {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 1rem;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+    label {
+      display: block;
+      margin: 1rem 0 0.5rem;
+      font-weight: bold;
+    }
+    input, select, button, textarea {
+      width: 100%;
+      padding: 0.5rem;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+    button {
+      background: #1e1e2f;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #3a3a5e;
+    }
+    #ideaOutput {
+      margin-top: 1rem;
+      padding: 1rem;
+      background: #eef2f7;
+      border-radius: 5px;
+      white-space: pre-wrap;
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      margin-top: 2rem;
+      font-size: 0.9rem;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Business Idea Generator AI</h1>
+  </header>
+  <main>
+    <p>Enter your details below and get a unique business idea generated for you!</p>
+    
+    <label for="domain">Business Domain</label>
+    <select id="domain">
+      <option>Technology</option>
+      <option>Education</option>
+      <option>Health</option>
+      <option>Food</option>
+      <option>Fashion</option>
+      <option>AI & Robotics</option>
+      <option>Other</option>
+    </select>
+
+    <label for="budget">Budget</label>
+    <select id="budget">
+      <option>Low</option>
+      <option>Medium</option>
+      <option>High</option>
+    </select>
+
+    <label for="skills">Skills (comma separated)</label>
+    <input type="text" id="skills" placeholder="e.g., Coding, Marketing, Design">
+
+    <label for="audience">Target Audience</label>
+    <select id="audience">
+      <option>Students</option>
+      <option>Professionals</option>
+      <option>Rural Communities</option>
+      <option>Global Market</option>
+      <option>Everyone</option>
+    </select>
+
+    <button onclick="generateIdea()">Generate Business Idea</button>
+
+    <div id="ideaOutput"></div>
+  </main>
+
+  <footer>
+    &copy; 2026 Business Idea Generator AI | Made by Sona Sibi
+  </footer>
+
+  <script>
+    function generateIdea() {
+      const domain = document.getElementById('domain').value;
+      const budget = document.getElementById('budget').value;
+      const skills = document.getElementById('skills').value;
+      const audience = document.getElementById('audience').value;
+
+      const ideas = [
+        `AI Study Planner\nProblem: Students struggle with time management.\nSolution: AI creates personalized schedules.\nRevenue: Subscription-based.\nTools: AI, Web App.\nWhy it works: High demand in education sector.`,
+        `Healthy Meal Subscription\nProblem: Busy people skip meals or eat unhealthy.\nSolution: Personalized healthy meal deliveries.\nRevenue: Subscription.\nTools: App, Food Supply Chain.\nWhy it works: Health-conscious market growing rapidly.`,
+        `Virtual Fashion Try-On\nProblem: People hesitate to buy online clothes.\nSolution: AR-based virtual try-on platform.\nRevenue: Commission + Ads.\nTools: AR, Mobile App.\nWhy it works: Reduces return rates, improves shopping experience.`,
+        `Skill-Based Micro Jobs\nProblem: Many have skills but no projects.\nSolution: Platform connecting skilled people with small gigs.\nRevenue: Commission per project.\nTools: Website, App.\nWhy it works: Gig economy growing fast.`,
+        `Eco-Friendly Packaging Startup\nProblem: High plastic usage.\nSolution: Biodegradable packaging solutions.\nRevenue: B2B sales to small businesses.\nTools: Manufacturing setup.\nWhy it works: Sustainability is trending.`
+      ];
+
+      // Randomly pick an idea
+      const randomIdea = ideas[Math.floor(Math.random() * ideas.length)];
+
+      document.getElementById('ideaOutput').innerText = `Your Business Idea in ${domain} (Budget: ${budget}, Skills: ${skills}, Audience: ${audience}):\n\n${randomIdea}`;
+    }
+  </script>
+</body>
+</html>
